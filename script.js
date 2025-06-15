@@ -775,7 +775,7 @@ Durasi          : ${dataHasil.durasi} menit
             if (!nomor) return Promise.resolve();
             const form = new FormData();
             form.append("appkey", "ba7c9a75-b7d8-4928-8cee-567708d3584a");
-            form.append("authkey", "VahslDaFWHLlSu2Y3vJCeT16pm69EFAuPAW2QW5MvALtFogUjl");
+            form.append("authkey", "sHSu8mF0UwmKtbm5Zuvb4JgUF9Bvj9BvcaT1MtHsexywLXhlx8");
             form.append("to", nomor);
             form.append("message", pesan);
             return fetch("https://app.wapanels.com/api/create-message", { method: "POST", body: form });

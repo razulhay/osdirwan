@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Kuis Interaktif</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://script.google.com/macros/s/AKfycbw4d7RSt9fQbNK6FGFSda5_keMIpWkTQn4pUW015gioiQfcFetze_3P5NqrbxlbG8ry/exec"></script>
+  <script defer src="script.js"></script>
+  <style>
+    header a {
+      color: white;
+      text-decoration: none;
+    }
+    header a:hover {
+      text-decoration: underline;
+    }
+    .dropdown {
+      position: relative;
+    }
+    .dropdown-menu {
+      display: none;
+      position: absolute;
+      background-color: white;
+      color: black;
+      min-width: 120px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+      z-index: 1;
+      padding: 0;
+      margin-top: 8px;
+    }
+    .dropdown-menu li {
+      list-style: none;
+      padding: 8px 12px;
+    }
+
+    .dropdown-menu li a {
+      text-decoration: none;
+      color: black;
+      display: block;
+    }
+    .dropdown-menu li a:hover {
+      background-color: #eee;
+    }
+    .halaman-konten {
+      display: none;
+      padding: 20px;
+    }
+    .halaman-konten h2 {
+      margin-top: 0;
+    }
+    .kembali-btn {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #388e3c;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  </style>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const semuaHalaman = document.querySelectorAll(".halaman, .halaman-konten");
+      semuaHalaman.forEach(hal => hal.style.display = "none");
+      document.getElementById("beranda").style.display = "block";
+
+      document.querySelectorAll(".menu-link").forEach(link => {
+        link.addEventListener("click", function (e) {
+          e.preventDefault();
+          semuaHalaman.forEach(hal => hal.style.display = "none");
+          const target = this.getAttribute("data-target");
+          document.getElementById(target).style.display = "block";
+        });
+      });
+
+      document.querySelectorAll(".kembali-btn").forEach(btn => {
+        btn.addEventListener("click", function () {
+          semuaHalaman.forEach(hal => hal.style.display = "none");
+          document.getElementById("beranda").style.display = "block";
+        });
+      });
+    });
+  </script>
+</head>
+<body>
+
+  <!-- Halaman Beranda -->
+  <div id="beranda" class="halaman">
+    <header style="background-color: #4a90e2; color: white; padding: 20px; display: flex; align-items: center;">
+      <div style="font-weight: bold; font-size: 24px;">BIMBEL ANTIREMED</div>
+      <nav style="margin-left: 20px;">
+        <ul style="list-style: none; display: flex; gap: 20px; margin: 0; padding: 0; color: white;">
+        
+          <li class="dropdown">
+            <a href="#">Akun</a>
+            <ul class="dropdown-menu">
+              <li><a href="#">Log in</a></li>
+              <li><a href="#">Sign Up</a></li>
+            </ul>
+          </li>
+          <li class="dropdown">
+            <a href="#">Belajar</a>
+            <ul class="dropdown-menu">
+              <li><a href="#" class="menu-link" data-target="belajar-sd">Paket SD</a></li>
+              <li><a href="#" class="menu-link" data-target="belajar-smp">Paket SMP</a></li>
+              <li><a href="#" class="menu-link" data-target="belajar-sma">Paket SMA</a></li>
+            </ul>
+          </li>
+          <li class="dropdown">
+            <a href="#">Tryout</a>
+            <ul class="dropdown-menu">
+              <li><a href="#" class="menu-link" data-target="tryout-sd">Tryout SD</a></li>
+              <li><a href="#" class="menu-link" data-target="tryout-smp">Tryout SMP</a></li>
+              <li><a href="#" class="menu-link" data-target="tryout-sma">Tryout SMA</a></li>
+            </ul>
+          </li>
+          <li class="dropdown">
+            <a href="#">Beli Paket</a>
+            <ul class="dropdown-menu">
+              <li><a href="#" class="menu-link" data-target="beli-dki-qris">Bank DKI - QRIS</a></li>
+              <li><a href="#" class="menu-link" data-target="beli-dki-transfer">Bank DKI - Transfer</a></li>
+              <li><a href="#" class="menu-link" data-target="beli-bri-qris">Bank BRI - QRIS</a></li>
+              <li><a href="#" class="menu-link" data-target="beli-bri-transfer">Bank BRI - Transfer</a></li>
+              <li><a href="#" class="menu-link" data-target="beli-bca-qris">Bank BCA - QRIS</a></li>
+              <li><a href="#" class="menu-link" data-target="beli-bca-transfer">Bank BCA - Transfer</a></li>
+              <li><a href="#" class="menu-link" data-target="beli-bni-qris">Bank BNI - QRIS</a></li>
+              <li><a href="#" class="menu-link" data-target="beli-bni-transfer">Bank BNI - Transfer</a></li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+    </header>
+    <main style="padding: 20px;">
+      <h1>Selamat datang di Bimbel Antiremed!</h1>
+      <p>Silakan pilih menu di atas untuk mulai belajar atau membeli paket.</p>
+    </main>
+  </div>
+
+  <!-- Halaman Konten Dinamis -->
+  <div id="belajar-sd" class="halaman-konten">
+  <h2>Paket SD</h2>
+  <div class="tombol-kelas-container">
+    <button class="tombol-3d">Kelas 1</button>
+    <button class="tombol-3d">Kelas 2</button>
+    <button class="tombol-3d">Kelas 3</button>
+    <button class="tombol-3d">Kelas 4</button>
+    <button class="tombol-3d">Kelas 5</button>
+    <button class="tombol-3d">Kelas 6</button>
+  </div>
+  <button class="kembali-btn">KEMBALI</button>
+  </div>
+  <div id="belajar-smp" class="halaman-konten">
+  <h2>Paket SMP</h2>
+  <div class="tombol-kelas-container">
+    <button class="tombol-3d">Kelas 7</button>
+    <button class="tombol-3d">Kelas 8</button>
+    <button class="tombol-3d">Kelas 9</button>
+
+  </div>
+  <button class="kembali-btn">KEMBALI</button>
+  </div>
+    <div id="belajar-sma" class="halaman-konten">
+  <h2>Paket SMA</h2>
+  <div class="tombol-kelas-container">
+    <button class="tombol-3d">Kelas 10</button>
+    <button class="tombol-3d">Kelas 11</button>
+    <button class="tombol-3d">Kelas 12</button>
+
+  </div>
+  <button class="kembali-btn">KEMBALI</button>
+  </div>
+
+  <div id="tryout-sd" class="halaman-konten">
+  <h2>Tryout SD</h2>
+  <div class="tombol-kelas-container">
+    <button class="tombol-3d">Kelas 1</button>
+    <button class="tombol-3d">Kelas 2</button>
+    <button class="tombol-3d">Kelas 3</button>
+    <button class="tombol-3d">Kelas 4</button>
+    <button class="tombol-3d">Kelas 5</button>
+    <button class="tombol-3d">Kelas 6</button>
+  </div>
+  <button class="kembali-btn">KEMBALI</button>
+  </div>
+  <div id="tryout-smp" class="halaman-konten">
+  <h2>Tryout SMP</h2>
+  <div class="tombol-kelas-container">
+    <button class="tombol-3d">Kelas 7</button>
+    <button class="tombol-3d">Kelas 8</button>
+    <button class="tombol-3d">Kelas 9</button>
+
+  </div>
+  <button class="kembali-btn">KEMBALI</button>
+  </div>
+    <div id="tryout-sma" class="halaman-konten">
+  <h2>Tryout SMA</h2>
+  <div class="tombol-kelas-container">
+    <button class="tombol-3d">Kelas 10</button>
+    <button class="tombol-3d">Kelas 11</button>
+    <button class="tombol-3d">Kelas 12</button>
+
+  </div>
+  <button class="kembali-btn">KEMBALI</button>
+  </div>
+
+  <div id="tryout-sd" class="halaman-konten"><h2>Tryout SD</h2><button class="kembali-btn">KEMBALI</button></div>
+  <div id="tryout-smp" class="halaman-konten"><h2>Tryout SMP</h2><button class="kembali-btn">KEMBALI</button></div>
+  <div id="tryout-sma" class="halaman-konten"><h2>Tryout SMA</h2><button class="kembali-btn">KEMBALI</button></div>
+
+  <div id="beli-dki-qris" class="halaman-konten"><h2>Bank DKI - QRIS</h2><button class="kembali-btn">KEMBALI</button></div>
+  <div id="beli-dki-transfer" class="halaman-konten"><h2>Bank DKI - Transfer</h2><button class="kembali-btn">KEMBALI</button></div>
+  <div id="beli-bri-qris" class="halaman-konten"><h2>Bank BRI - QRIS</h2><button class="kembali-btn">KEMBALI</button></div>
+  <div id="beli-bri-transfer" class="halaman-konten"><h2>Bank BRI - Transfer</h2><button class="kembali-btn">KEMBALI</button></div>
+  <div id="beli-bca-qris" class="halaman-konten"><h2>Bank BCA - QRIS</h2><button class="kembali-btn">KEMBALI</button></div>
+  <div id="beli-bca-transfer" class="halaman-konten"><h2>Bank BCA - Transfer</h2><button class="kembali-btn">KEMBALI</button></div>
+  <div id="beli-bni-qris" class="halaman-konten"><h2>Bank BNI - QRIS</h2><button class="kembali-btn">KEMBALI</button></div>
+  <div id="beli-bni-transfer" class="halaman-konten"><h2>Bank BNI - Transfer</h2><button class="kembali-btn">KEMBALI</button></div>
+
+
+  <!-- Halaman Login -->
+  <div id="login-page" class="halaman-konten">
+    <form id="login-form" class="styled-login-form">
+      <h2>Login</h2>
+      <input type="email" id="login-email" placeholder="Email" required><br>
+      
+      <input type="password" id="login-password" placeholder="Password" required><br>
+      <button type="submit" class="main-button">Log In</button>
+      <button type="button" class="main-button" id="login-kembali">Kembali</button>
+      
+    </form>
+  </div>
+
+</body>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const loginLink = [...document.querySelectorAll('li a')].find(a => a.textContent.trim() === "Log in");
+  if (loginLink) {
+    loginLink.addEventListener("click", function(e) {
+      e.preventDefault();
+      document.querySelectorAll(".halaman, .halaman-konten").forEach(el => el.style.display = "none");
+      document.getElementById("login-page").style.display = "block";
+    });
+  }
+
+  const kembaliBtn = document.querySelector("#login-page .kembali-btn");
+  if (kembaliBtn) {
+    kembaliBtn.addEventListener("click", function() {
+      document.querySelectorAll(".halaman, .halaman-konten").forEach(el => el.style.display = "none");
+      document.getElementById("beranda").style.display = "block";
+    });
+  }
+
+  document.getElementById("login-form").addEventListener("submit", function(e) {
+    e.preventDefault();
+    const email = document.getElementById("login-email").value.trim().toLowerCase();
+    const password = document.getElementById("login-password").value.trim();
+
+    const user = window.pesertaList?.find(p => p.email === email && p.password === password);
+    if (user) {
+  alert("Login berhasil!");
+
+  // Sembunyikan semua halaman
+  document.querySelectorAll(".halaman, .halaman-konten").forEach(el => el.style.display = "none");
+
+  // Tampilkan form identitas peserta
+  document.getElementById("identity-form").style.display = "block";
+
+  // Autofill email dan jalankan blur untuk isi data lainnya
+  const emailField = document.getElementById("email");
+  emailField.value = user.email;
+  emailField.dispatchEvent(new Event("blur"));
+} else {
+  alert("Email atau password salah.");
+}
+  });
+});
+</script>
+
+<script>
+
+</script>
+</html>
+
+
+<!-- Form Identitas (disembunyikan awalnya) -->
+  <div class="main-container">
+    <div id="identity-form">
+      <div class="info-message" id="motivasi-peserta">
+        🎯 <strong>PESAN</strong><br><span id="pesan-motivasi">Mengambil pesan...</span>
+      </div>
+      <h2>Identitas Peserta</h2>
+      <input type="email" id="email" placeholder="Isi Email"><br>
+      
+      <input type="text" id="name" placeholder="Nama"><br>
+      <input type="text" id="sekolah" placeholder="Asal Sekolah"><br>
+      <input type="text" id="kurikulum" placeholder="Kurikulum">
+      <input type="text" id="kelas" placeholder="Kelas">
+      <h2>Paket Soal</h2>
+      <select id="mapel"><option value="">Pilih Mata Pelajaran</option></select><br>
+      <select id="bab"><option value="">Memuat daftar bab...</option></select><br>
+      <input type="number" id="jumlahSoal" placeholder="Jumlah Soal" min="1" readonly><br>
+      <input type="number" id="durasi" placeholder="Durasi (menit)" min="1" readonly><br>
+      <select id="paket"><option value="">Pilih Paket</option></select><br>
+      <input type="password" id="password" placeholder="Password"><br>
+      <span id="password-message" style="color: red; font-weight: bold;"></span><br>
+      <button id="start-btn" disabled>Mulai</button>
+      <button id="exit-btn" class="main-button">Selesai</button>
+    </div>
+  </div>
+  
+
+  
+
+</body>
+
+<script>
+
+</script>
+
+<script>
+
+</script>
+</html>
+
+
+    <!-- Halaman Kuis -->
+   <div id="quiz-box" style="display:none;">
+  <div class="top-bar">
+    <!-- Status Box (Timer dan Skor) - Di atas -->
+    <div class="status-box">
+      <div id="timer">00:00</div>
+      <div id="score">Skor: 0</div>
+    </div>
+    
+  </div>
+
+  <div class="top-bar">
+    <!-- Kotak Info Peserta - Di bawah status -->
+    <div id="participant-info" class="info-box">
+      <div><strong>Nama</strong><br><span id="label-nama-siswa"></span></div>
+      <div><strong>Sekolah</strong><br><span id="label-asal-sekolah"></span></div>
+      <div><strong>Kelas</strong><br><span id="label-kelas"></span></div>
+      <div><strong>Bab</strong><br><span id="label-bab-materi"></span></div>
+      <div><strong>Paket </strong><span id="label-nama-paket"></span></div>
+    </div>
+  </div>
+  
+
+  <div class="quiz-content">
+    <div id="question"></div>
+    <div id="options"></div>
+    <div id="feedback"></div>
+  </div>
+  <div id="navigation"></div>
+</div>
+
+  </div>
+
+  <!-- Script: Muat dropdown paket berdasarkan bab -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      document.getElementById("identity-form").style.display = "none";
+      document.getElementById("bab").addEventListener("change", function () {
+        const babDipilih = this.value;
+        updatePaketDropdown(babDipilih);
+      });
+    });
+
+    function updatePaketDropdown(bab) {
+      const url = 'https://opensheet.elk.sh/1-XMEFrfkLfxd9AWi-EfLuGo8dnjO_kzYUCJ2gy9C-zs/Sheet1';
+      fetch(url)
+        .then(response => response.json())
+        .then(data => {
+          const paketSelect = document.getElementById("paket");
+          paketSelect.innerHTML = '<option value="">Pilih Paket</option>';
+          const filtered = data.filter(row => row["Nama Sheet"] === bab);
+          if (filtered.length > 0) {
+            const paketList = filtered[0]["Paket Ke"].split(',').map(s => s.trim());
+            for (const paket of paketList) {
+              const option = document.createElement("option");
+              option.value = paket;
+              option.textContent = paket;
+              paketSelect.appendChild(option);
+            }
+          } else {
+            const option = document.createElement("option");
+            option.textContent = "Tidak ada paket tersedia";
+            paketSelect.appendChild(option);
+          }
+        })
+        .catch(err => {
+          console.error("Gagal memuat paket:", err);
+        });
+    }
+  </script>
+  
+      
+
+<script>
+
+</script>
+
+<script>
+
+</script>
+</html>
+
+
+
+
+
+
+<!-- Tempatkan script di sini -->
+<script>
+  async function ambilPesanMotivasi(email) {
+    const url = `https://script.google.com/macros/s/AKfycbwwRlCvAHQSsNG1tvqiE2SdJ0tKiJ-Z27hKQyALBEXvR65FLEytzE90C4qTM2RpwAFq5A/exec?email=${encodeURIComponent(email)}`;
+
+    try {
+      const response = await fetch(url);
+      const data = await response.json();
+      if (data.pesan) {
+        document.getElementById('pesan-motivasi').innerText = data.pesan;
+      } else {
+        document.getElementById('pesan-motivasi').innerText = "Semangat ya!";
+      }
+    } catch (error) {
+      console.error("Gagal mengambil pesan motivasi:", error);
+      document.getElementById('pesan-motivasi').innerText = "Tetap semangat!";
+    }
+  }
+
+  document.getElementById('email').addEventListener('blur', function() {
+    const email = this.value.trim();
+    if (email) ambilPesanMotivasi(email);
+  });
+</script>
+<script src="script.js"></script>
+<div id="leaderboard" style="display: none;" class="leaderboard-container">
+  <h2>🏆 Leaderboard</h2>
+  <p id="filter-info"></p>
+  <table id="leaderboard-table">
+    <thead>
+      <tr>
+        <th>Peringkat</th>
+        <th>Nama</th>
+        <th>Sekolah</th>
+        <th>Nilai</th>
+        <th>Waktu Selesai</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+  <button onclick="window.location.reload()">🔁 Kembali</button>
+</div>
+<script>
+document.querySelectorAll('.dropdown').forEach(dropdown => {
+  dropdown.addEventListener('click', function(event) {
+    event.stopPropagation(); // agar klik di dropdown tidak menutupnya langsung
+    this.classList.toggle('open');
+  });
+});
+
+document.addEventListener('click', function() {
+  document.querySelectorAll('.dropdown.open').forEach(dropdown => {
+    dropdown.classList.remove('open');
+  });
+});
+</script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  // Tutup semua menu dropdown saat klik di luar area
+  document.addEventListener("click", () => {
+    document.querySelectorAll(".dropdown").forEach(drop => drop.classList.remove("open"));
+  });
+
+  // Toggle menu saat diklik
+  document.querySelectorAll(".dropdown > a").forEach(anchor => {
+    anchor.addEventListener("click", function (e) {
+      e.preventDefault();
+      e.stopPropagation(); // cegah klik luar menutup langsung
+
+      // Tutup semua dropdown lainnya
+      document.querySelectorAll(".dropdown").forEach(drop => {
+        if (drop !== this.parentElement) drop.classList.remove("open");
+      });
+
+      // Toggle dropdown yang diklik
+      this.parentElement.classList.toggle("open");
+    });
+  });
+});
+</script>
+
+
+  
+
+
+<!-- Halaman Sign Up -->
+<div id="signup-page" class="halaman-konten">
+  <form id="signup-form" class="styled-login-form">
+    <h2>Sign Up</h2>
+    <input type="email" id="signup-email" placeholder="Email" required><br>
+    <input type="text" id="signup-nama" placeholder="Nama" required><br>
+    <input type="text" id="signup-sekolah" placeholder="Asal Sekolah" required><br>
+    <input type="text" id="signup-kurikulum" placeholder="Kurikulum" required><br>
+    <input type="text" id="signup-kelas" placeholder="Kelas" required><br>
+    <input type="password" id="signup-password" placeholder="Password" required><br>
+    <input type="text" id="signup-wa-ayah" placeholder="WA Ayah"><br>
+    <input type="text" id="signup-wa-ibu" placeholder="WA Ibu"><br>
+    <input type="text" id="signup-wa-anak" placeholder="WA Anak"><br>
+    <button type="submit" class="main-button">OK</button>
+    <div id="signup-error" style="color: red; margin-top: 10px;"></div>
+    <button type="button" class="main-button" id="signup-kembali">Kembali</button>
+  </form>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const signupLink = [...document.querySelectorAll('li a')].find(a => a.textContent.trim() === "Sign Up");
+    if (signupLink) {
+      signupLink.addEventListener("click", function(e) {
+        e.preventDefault();
+        document.querySelectorAll(".halaman, .halaman-konten").forEach(el => el.style.display = "none");
+        document.getElementById("signup-page").style.display = "block";
+      });
+    }
+
+    document.getElementById("signup-kembali").addEventListener("click", function() {
+      document.querySelectorAll(".halaman, .halaman-konten").forEach(el => el.style.display = "none");
+      document.getElementById("beranda").style.display = "block";
+    });
+
+    document.getElementById("signup-form").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const email = document.getElementById("signup-email").value.trim();
+      const nama = document.getElementById("signup-nama").value.trim();
+      const sekolah = document.getElementById("signup-sekolah").value.trim();
+      const kurikulum = document.getElementById("signup-kurikulum").value.trim();
+      const kelas = document.getElementById("signup-kelas").value.trim();
+      const password = document.getElementById("signup-password").value.trim();
+      const waAyah = document.getElementById("signup-wa-ayah").value.trim();
+      const waIbu = document.getElementById("signup-wa-ibu").value.trim();
+      const waAnak = document.getElementById("signup-wa-anak").value.trim();
+      const errorEl = document.getElementById("signup-error");
+      errorEl.textContent = "";
+
+      const formData = new FormData();
+      formData.append("email", email);
+      formData.append("nama", nama);
+      formData.append("sekolah", sekolah);
+      formData.append("kurikulum", kurikulum);
+      formData.append("kelas", kelas);
+      formData.append("password", password);
+      formData.append("pesan", "");
+      formData.append("waAyah", waAyah);
+      formData.append("waIbu", waIbu);
+      formData.append("waAnak", waAnak);
+
+      fetch("https://script.google.com/macros/s/AKfycbwRz437p8ArvbgTNz2ZpvWZEk-k_HiwdMv2Ho5KcNM0k1pr_qk1iH7UVxLUsYtpVs6J/exec", {
+        method: "POST",
+        body: formData
+      })
+      .then(response => response.json())
+      .then(data => {
+        if(data.status === "success") {
+          alert("✅ Pendaftaran berhasil!");
+          document.getElementById("signup-form").reset();
+          document.getElementById("beranda").style.display = "block";
+          document.getElementById("signup-page").style.display = "none";
+        } else {
+          errorEl.textContent = "❌ Gagal daftar: " + (data.message || "Error tidak diketahui");
+        }
+      })
+      .catch(err => {
+        errorEl.textContent = "❌ Gagal mengirim data: " + err.message;
+      });
+    });
+  });
+  document.getElementById("login-kembali").addEventListener("click", function () {
+  document.querySelectorAll(".halaman, .halaman-konten").forEach(el => el.style.display = "none");
+  document.getElementById("beranda").style.display = "block";
+});
+</script>
+
+</body>
+
+<script>
+
+</script>
+
+<script>
+
+</script>
+</html>
+
+

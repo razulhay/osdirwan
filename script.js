@@ -10,27 +10,100 @@ let startTime;
 
 isReadonlyMode = true;
 
-const nameInput = document.getElementById("name");
-const emailInput = document.getElementById("email");
-const sekolahInput = document.getElementById("sekolah");
-const kurikulumInput = document.getElementById("kurikulum");
-const kelasInput = document.getElementById("kelas");
-const mapelInput = document.getElementById("mapel");
-const babInput = document.getElementById("bab");
-const paketInput = document.getElementById("paket");
-const jumlahSoalInput = document.getElementById("jumlahSoal");
-const durasiInput = document.getElementById("durasi");
-const passwordInput = document.getElementById("password");
-const startBtn = document.getElementById("start-btn");
-const passwordMessage = document.getElementById("password-message");
-const identityForm = document.getElementById("identity-form");
-const quizBox = document.getElementById("quiz-box");
-const questionEl = document.getElementById("question");
-const optionsEl = document.getElementById("options");
-const feedbackEl = document.getElementById("feedback");
-const scoreEl = document.getElementById("score");
-const timerEl = document.getElementById("timer");
-const navigation = document.getElementById("navigation");
+window.loggedInEmail = null; // 🆕 Menyimpan email login
+declareVariables();
+
+// Ambil data peserta dari spreadsheet
+fetch("https://opensheet.elk.sh/18mQe0-u4ma9mEemc5L6zN6AWe6IbfopdDIlhUKM1WEE/PESERTA")
+  .then(res => res.json())
+  .then(data => {
+    window.pesertaList = data.map(row => ({
+      email: (row.Email || "").trim().toLowerCase(),
+      nama: row.Nama || "",
+      asalSekolah: row["Asal Sekolah"] || "",
+      kurikulum: row["Kurikulum"] || "",
+      kelas: row.Kelas || "",
+      password: row.Password || "",
+      pesan: row["Pesan Pribadi"] || ""
+    }));
+
+    if (window.loggedInEmail) {
+      emailInput.value = window.loggedInEmail;
+      emailInput.dispatchEvent(new Event("blur"));
+    }
+  })
+  .catch(err => console.error("❌ Gagal memuat data peserta:", err));
+
+const loginForm = document.getElementById("login-form");
+if (loginForm) {
+  loginForm.addEventListener("submit", function (e) {
+    e.preventDefault();
+    const email = document.getElementById("login-email").value.trim().toLowerCase();
+    const password = document.getElementById("login-password").value.trim();
+
+    const user = window.pesertaList?.find(p => p.email === email && p.password === password);
+
+    if (user) {
+      alert("Login berhasil!");
+      window.loggedInEmail = user.email;
+
+      document.querySelectorAll(".halaman, .halaman-konten").forEach(el => el.style.display = "none");
+      document.getElementById("login-page").style.display = "none";
+      document.getElementById("beranda").style.display = "block";
+    } else {
+      alert("Email atau password salah.");
+    }
+  });
+}
+
+// TOMBOL BELAJAR/TRYOUT AKTIFKAN FORM IDENTITAS DENGAN VALIDASI LOGIN
+
+document.addEventListener("DOMContentLoaded", function () {
+  const semuaTombolKelas = document.querySelectorAll(".tombol-3d");
+
+  semuaTombolKelas.forEach(btn => {
+  btn.addEventListener("click", function () {
+    if (!window.loggedInEmail) {
+      alert("⚠️ Kamu belum login");
+      document.querySelectorAll(".halaman, .halaman-konten, #identity-form").forEach(el => el.style.display = "none");
+      document.getElementById("beranda").style.display = "block";
+      return;
+      
+    }
+
+    document.querySelectorAll(".halaman, .halaman-konten").forEach(hal => hal.style.display = "none");
+    document.getElementById("identity-form").style.display = "block";
+
+    const emailInput = document.getElementById("email");
+    emailInput.value = window.loggedInEmail;
+    emailInput.dispatchEvent(new Event("blur"));
+  });
+});
+});
+
+function declareVariables() {
+  nameInput = document.getElementById("name");
+  emailInput = document.getElementById("email");
+  sekolahInput = document.getElementById("sekolah");
+  kurikulumInput = document.getElementById("kurikulum");
+  kelasInput = document.getElementById("kelas");
+  mapelInput = document.getElementById("mapel");
+  babInput = document.getElementById("bab");
+  paketInput = document.getElementById("paket");
+  jumlahSoalInput = document.getElementById("jumlahSoal");
+  durasiInput = document.getElementById("durasi");
+  passwordInput = document.getElementById("password");
+  startBtn = document.getElementById("start-btn");
+  passwordMessage = document.getElementById("password-message");
+  identityForm = document.getElementById("identity-form");
+  quizBox = document.getElementById("quiz-box");
+  questionEl = document.getElementById("question");
+  optionsEl = document.getElementById("options");
+  feedbackEl = document.getElementById("feedback");
+  scoreEl = document.getElementById("score");
+  timerEl = document.getElementById("timer");
+  navigation = document.getElementById("navigation");
+}
 
 // Ambil data peserta dari spreadsheet
 document.addEventListener("DOMContentLoaded", () => {
@@ -748,9 +821,9 @@ function showSummary() {
 
 const pesan = 
 `📋 *Laporan Hasil Kuis*
-Halo ${dataHasil.nama},
+Halo ${dataHasil.nama}...
 
-Berikut hasil lengkap kuis yang Ananda kerjakan:
+Berikut hasil kuis yang Ananda kerjakan:
 
 *🧾 Paket Soal*
 Kurikulum       : ${dataHasil.kurikulum}
@@ -764,22 +837,25 @@ Jumlah Soal     : ${dataHasil.jumlah_soal}
 Benar           : ${dataHasil.benar}
 Salah           : ${dataHasil.salah}
 Nilai           : ${dataHasil.nilai}/100
-Waktu Selesai   : ${dataHasil.waktu_selesai}
+Selesai         : ${dataHasil.waktu_selesai}
 Durasi          : ${dataHasil.durasi} menit
 
 🎉 Terima kasih telah mengikuti kuis ini.
 
-- BIMBEL ANTIREMED`;
+- TEAM BIMBEL ANTIREMED`;
 
           const kirimWA = (nomor) => {
-            if (!nomor) return Promise.resolve();
-            const form = new FormData();
-            form.append("appkey", "ba7c9a75-b7d8-4928-8cee-567708d3584a");
-            form.append("authkey", "sHSu8mF0UwmKtbm5Zuvb4JgUF9Bvj9BvcaT1MtHsexywLXhlx8");
-            form.append("to", nomor);
-            form.append("message", pesan);
-            return fetch("https://app.wapanels.com/api/create-message", { method: "POST", body: form });
-          };
+          if (!nomor) return Promise.resolve();
+          const form = new FormData();
+          form.append("appkey", "a16356e4-75ea-49ed-acf5-ce26ff3bd27e");
+          form.append("authkey", "sHSu8mF0UwmKtbm5Zuvb4JgUF9Bvj9BvcaT1MtHsexywLXhlx8");
+          form.append("to", nomor);
+          form.append("message", pesan);
+          return fetch("https://app.wapanels.com/api/create-message", {
+            method: "POST",
+            body: form
+          });
+        };
 
           Promise.all([kirimWA(nomorAyah), kirimWA(nomorIbu), kirimWA(nomorAnak)])
             .then(() => {
@@ -925,16 +1001,4 @@ async function cekRiwayatKuis() {
   }
 
 }
-document.addEventListener("DOMContentLoaded", () => {
-  const tombolKelas = document.querySelectorAll(
-    "#belajar-sd .tombol-3d, #belajar-smp .tombol-3d, #belajar-sma .tombol-3d, #tryout-sd .tombol-3d, #tryout-smp .tombol-3d, #tryout-sma .tombol-3d"
-  );
-  const semuaHalaman = document.querySelectorAll(".halaman, .halaman-konten");
 
-  tombolKelas.forEach(tombol => {
-    tombol.addEventListener("click", () => {
-      semuaHalaman.forEach(hal => hal.style.display = "none");
-      document.getElementById("identity-form").style.display = "block";
-    });
-  });
-});

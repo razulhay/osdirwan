@@ -616,3 +616,15 @@ html, body {
   outline: none;
   box-shadow: 0 0 8px rgba(0, 121, 107, 0.3);
 }
+.lihat-btn {
+  background-color: #1976d2;
+  color: white;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 13px;
+  text-decoration: none;
+  font-weight: bold;
+}
+.lihat-btn:hover {
+  background-color: #0d47a1;
+}
